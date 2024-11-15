@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Calculator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    #calculator {
+      width: 300px;
+      margin: 0 auto;
+      border: 5px solid black;
+      padding: 60px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 3px solid;
+      box-sizing: border-box;
+    }
+    button {
+      width: 60px;
+      height: 80px;
+      margin: 5px;
+      border: 5px solid black;
+      background-color:pink;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="calculator">
+    <input type="text" id="display" readonly>
+    <br>
+    <button onclick="appendNumber('7')">7</button>
+    <button onclick="appendNumber('8')">8</button>
+    <button onclick="appendNumber('9')">9</button>
+    <button onclick="appendOperator('/')">/</button>
+    <br>
+    <button onclick="appendNumber('4')">4</button>
+    <button onclick="appendNumber('5')">5</button>
+    <button onclick="appendNumber('6')">6</button>
+    <button onclick="appendOperator('*')">*</button>
+    <br>
+    <button onclick="appendNumber('1')">1</button>
+    <button onclick="appendNumber('2')">2</button>
+    <button onclick="appendNumber('3')">3</button>
+    <button onclick="appendOperator('-')">-</button>
+    <br>
+    <button onclick="appendNumber('0')">0</button>
+    <button onclick="appendNumber('.')">.</button>
+    <button onclick="calculate()">=</button>
+    <button onclick="appendOperator('+')">+</button>
+    <br>
+    <button onclick="clearDisplay()">C</button>
+  </div>
+
+  <script>
+    let display = document.getElementById('display');
+    let operator = null;
+    let operand1 = null;
+
+    function appendNumber(num) {
+      display.value += num;
+    }
+
+    function appendOperator(op) {
+      operator = op;
+      operand1 = parseFloat(display.value);
+      display.value += op;
+    }
+
+    function calculate() {
+      let operand2 = parseFloat(display.value.substring(display.value.lastIndexOf(operator) + 1));
+      let result = 0;
+      switch (operator) {
+        case '+':
+          result = operand1 + operand2;
+          break;
+        case '-':
+          result = operand1 - operand2;
+          break;
+        case '*':
+          result = operand1 * operand2;
+          break;
+        case '/':
+          if (operand2 === 0) {
+            result = "Error: Division by zero";
+          } else {
+            result = operand1 / operand2;
+          }
+          break;
+      }
+      display.value = result;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+      operator = null;
+      operand1 = null;
+    }
+  </script>
+</body>
+</html>
